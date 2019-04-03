@@ -1,0 +1,14 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Lab_1_Client_Server_Chat/Client/bin/Debug
+/Lab_1_Client_Server_Chat/Client/obj
+/Lab_1_Client_Server_Chat/Domain/bin/Debug/net47
+/Lab_1_Client_Server_Chat/Domain/obj
+/Lab_1_Client_Server_Chat/packages/Ninject.3.3.4
+/Lab_1_Client_Server_Chat/Server/bin/Debug/net47
+/Lab_1_Client_Server_Chat/Server/obj
+/Lab_1_Client_Server_Chat/.vs
+/.vs
+*.vspscc

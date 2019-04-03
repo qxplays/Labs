@@ -1,0 +1,64 @@
+﻿<Window x:Class="Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client"
+        xmlns:pdc="clr-namespace:Domain.PublicDataContracts;assembly=Domain"
+        xmlns:forChat="clr-namespace:Domain.PublicDataContracts.ForChat;assembly=Domain"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Name="ClientWindow"
+        d:DataContext="{d:DesignInstance local:MainWindow, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Label Content="Пользователи:" HorizontalAlignment="Left" Margin="668,0,0,0" VerticalAlignment="Top" Width="100"/>
+        <TextBox Name="ChatTextBox" HorizontalAlignment="Left" Height="23" Margin="108,386,0,0" TextWrapping="Wrap" Text ="Сообщение" VerticalAlignment="Top" Width="511" GotFocus="ChatTextBox_GotFocus" KeyDown="ChatTextBox_KeyDown" />
+        <Button Content="Отправить" Name="SendBtn" HorizontalAlignment="Left" Margin="639,389,0,0" VerticalAlignment="Top" Width="112" Click="SendBtn_Click"/>
+        <Label Content="Каналы:               " HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="UserName" HorizontalAlignment="Left" Height="23" Margin="0,386,0,0" TextWrapping="Wrap" Text="{Binding Path=_model.CurrentUser.Nickname, Mode=TwoWay}" VerticalAlignment="Top" Width="100"/>
+        <ListView Name="Users" ItemsSource="{Binding _model.SelectedChannel.Users, Mode=OneWay, NotifyOnSourceUpdated=True}" HorizontalAlignment="Left" Height="294" Margin="670,31,0,0" VerticalAlignment="Top" Width="112">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Пользователи:" DisplayMemberBinding="{Binding Nickname}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView Name="Channels" ItemsSource="{Binding _model.ChannelsCollection, Mode=OneWay}" SelectedItem="{Binding Path=_model.SelectedChannel, Mode=OneWayToSource}" HorizontalAlignment="Left" Height="271" Margin="0,26,0,0" VerticalAlignment="Top" Width="100" SelectedIndex="0">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Каналы:" DisplayMemberBinding="{Binding Name}" Width="90"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView  Name="Messages" ItemsSource="{Binding _model.SelectedChannel.Messages, Mode=OneWay}" HorizontalAlignment="Left" Height="376" Margin="108,5,0,0" VerticalAlignment="Top" Width="555" SelectedIndex="0">
+            <ListView.Resources>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <EventSetter Event="MouseDoubleClick" Handler="MessageDoubleClick" />
+                </Style>
+            </ListView.Resources>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Отправитель:" DisplayMemberBinding="{Binding Sender.Nickname}"/>
+                    <GridViewColumn Header="Сообщение:" DisplayMemberBinding="{Binding Text}" Width="470"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Name="CreateChannelBtn" Content="Зайти на канал" HorizontalAlignment="Left" Margin="0,327,0,0" VerticalAlignment="Top" Width="100" Click="CreateChannelBtn_Click"/>
+        <TextBox Name="NewChannelName" HorizontalAlignment="Left" Height="23" Margin="0,302,0,0" TextWrapping="Wrap" Text="ChannelName" VerticalAlignment="Top" Width="100"/>
+        <Button Content="Отправить файл" HorizontalAlignment="Left" Margin="676,332,0,0" VerticalAlignment="Top" Width="106" Click="Button_Click"/>
+
+    </Grid>
+    <Window.Resources>
+        <Style TargetType="TabItem">
+            <Setter Property="HeaderTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name, Mode=OneWay}" FontSize="12"></TextBlock>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+</Window>
